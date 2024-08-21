@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "626800983407",
+    "project_id": "fcm-cloudfunctions",
+    "storage_bucket": "fcm-cloudfunctions.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626800983407:android:ab5262daa8acc2c09a7c9a",
+        "android_client_info": {
+          "package_name": "com.oztasibrahimomer.firebase_fcm_cloud_functions"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWSU-Gqq_UIr4TXOH3hsFLmUTViyJVbvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
