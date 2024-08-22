@@ -21,7 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.UUID
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +33,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 fun KullaniciKAydiDialog(showDialog:MutableState<Boolean>,context: Context) {
 
     val auth=FirebaseAuth.getInstance()
+    val db= Firebase.firestore
     var email=remember{ mutableStateOf("") }
     var password=remember{ mutableStateOf("") }
 
@@ -60,11 +65,24 @@ fun KullaniciKAydiDialog(showDialog:MutableState<Boolean>,context: Context) {
                         .addOnSuccessListener {
                             getFcmToken { token->
                                 token?.let {
-                                    Toast.makeText(context,"Token: $token",Toast.LENGTH_SHORT).show()
+                                    val newToken= hashMapOf(
+                                        "tokenID" to it
+                                    )
 
+                                    val uuid=UUID.randomUUID().toString()
+
+                                    db.collection("userTokens").document(uuid).set(newToken)
+                                        .addOnSuccessListener {
+                                            Log.i("Success","Token basarili bir sekilde kayit edildi...")
+                                        }
+                                        .addOnFailureListener {
+                                            Log.i("Failure","Maalesef")
+                                        }
                                 }
 
                             }
+
+
                             showDialog.value=false
 
                         }
@@ -84,7 +102,7 @@ fun KullaniciKAydiDialog(showDialog:MutableState<Boolean>,context: Context) {
     )
 }
 
-private fun getFcmToken(onComplete: (String?) -> Unit) {
+ fun getFcmToken(onComplete: (String?) -> Unit) {
     FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val token = task.result

@@ -83,4 +83,8 @@ dependencies {
 
     //Firebase-FireStore
     implementation("com.google.firebase:firebase-firestore")
+
+
+
+    //git remote add origin https://github.com/IbrahimOmerOztas/NotificaitonManager-AndroidApp.git
 }

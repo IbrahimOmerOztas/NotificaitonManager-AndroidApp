@@ -1,5 +1,6 @@
 package com.oztasibrahimomer.firebase_fcm_cloud_functions.screen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,16 @@ fun Auth_Page(navController: NavController) {
     val currentUser = auth.currentUser
     if (currentUser != null) {
         navController.navigate("main")
+    }
+
+    LaunchedEffect(key1 = Unit){
+        getFcmToken {
+            it?.let {
+
+                Log.i("Token",it)
+
+            }
+        }
     }
 
 
